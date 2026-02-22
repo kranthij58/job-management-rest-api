@@ -2,6 +2,7 @@ package com.kranthi.JobApp2.controller;
 
 import com.kranthi.JobApp2.model.Job;
 import com.kranthi.JobApp2.repository.JobRepo;
+import com.kranthi.JobApp2.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,33 +12,33 @@ import java.util.List;
 
 public class HomeController {
     @Autowired
-    JobRepo jobs;
+    JobService service;
     @GetMapping("jobs")
 
     public List<Job> getAllJobs(){
-        return jobs.getJobList();
+        return service.getAllJobsList();
 
     }
     @GetMapping("jobs/{postId}")
     public Job getJob(@PathVariable String postId){
-        return jobs.getjob(postId);
+        return service.getjob(postId);
     }
 
     @PostMapping("/jobs")
     public Job setJob( @RequestBody Job job){
-        jobs.addJob(job);
-        return jobs.getjob(job.getPostId());
+        service.addJob(job);
+        return service.getjob(job.getPostId());
     }
     @PutMapping("/jobs")
     public Job updateJob(@RequestBody Job job){
-        jobs.updateJob(job);
-        return jobs.getjob(job.getPostId());
+        service.updateJob(job);
+        return service.getjob(job.getPostId());
     }
 
     @DeleteMapping("/jobs/{postId}")
     public Job deleteJob(@PathVariable String postId){
-        Job job = jobs.getjob(postId);
-        jobs.deleteJob(postId);
+        Job job = service.getjob(postId);
+        service.deleteJob(postId);
         return job;
 
     }

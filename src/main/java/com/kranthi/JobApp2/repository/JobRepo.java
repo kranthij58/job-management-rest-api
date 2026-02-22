@@ -70,7 +70,7 @@ public class JobRepo {
     }
 
 
-    public List<Job> getJobList() {
+    public List<Job> getAllJobsList() {
         return jobList;
     }
 }
