@@ -42,4 +42,16 @@ public class HomeController {
         return job;
 
     }
+
+    @GetMapping("load")
+    public void loadJobs(){
+        service.load();
+    }
+
+    @GetMapping("/jobs/keyword/{keyword}")
+    public List<Job> search(@PathVariable String keyword){
+        return service.search(keyword);
+
+    }
+
 }
