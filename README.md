@@ -1,91 +1,111 @@
-# Job Management REST API 🚀
+# 🚀 Job Management REST API
 
-A simple Job Management REST API built using Spring Boot that performs CRUD (Create, Read, Update, Delete) operations.
-
-This project demonstrates the fundamentals of REST architecture, stateless communication, and layered backend design using Spring Boot.
+A robust Job Management system built with **Spring Boot** and **Spring Data JPA**, featuring persistent data storage with **MySQL**.
 
 ---
 
 ## 📌 Tech Stack
 
-* Java
-* Spring Boot
-* Maven
-* REST APIs
-* Postman (API Testing)
+* **Java 17+**
+* **Spring Boot 3.x** (Web, Data JPA)
+* **MySQL** (Relational Database)
+* **Maven** (Build Tool)
+* **Postman** (API Testing)
 
 ---
 
 ## 🏗️ Architecture
 
-This project follows a layered architecture:
-
-Controller → Service → Repository → Model
-
-* **Controller**: Handles HTTP requests and responses
-* **Service**: Contains business logic
-* **Repository**: Manages data storage
-* **Model**: Represents Job entity structure
-
----
-
-## 🔥 Features Implemented
-
-* ✅ Add Job (POST)
-* ✅ Get All Jobs (GET)
-* ✅ Get Job by ID (GET)
-* ✅ Update Job (PUT)
-* ✅ Delete Job (DELETE)
-
-All endpoints were tested using Postman.
-
----
-
-## 🌐 REST Principles Applied
-
-* Stateless communication
-* Proper use of HTTP methods
-* Layered system design
-* Clear separation of concerns
-
----
-
-## ▶️ How to Run the Project
-
-1. Clone the repository
-2. Navigate to the project directory
-3. Run the application:
+This project follows a professional layered architecture ensuring separation of concerns:
 
 ```
+Controller → Service → Repository (JPA) → MySQL Database
+```
+
+* **Controller** – Handles HTTP requests and exposes REST endpoints.
+* **Service** – Contains business logic and manages transactions.
+* **Repository** – Uses Spring Data JPA to interact with the database.
+* **Model (Entity)** – JPA entities mapped to MySQL tables.
+
+---
+
+## 🗄️ Database Configuration
+
+Configure your MySQL connection inside:
+
+```
+src/main/resources/application.properties
+```
+
+> ⚠️ Ensure `application.properties` is added to `.gitignore` to protect your database credentials.
+
+```properties
+# MySQL Connection Settings
+spring.datasource.url=jdbc:mysql://localhost:3306/job_db
+spring.datasource.username=YOUR_USERNAME
+spring.datasource.password=YOUR_PASSWORD
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# JPA / Hibernate Properties
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+```
+
+---
+
+## 🔥 Features
+
+* ✅ Create a Job
+* ✅ Retrieve all Jobs
+* ✅ Retrieve Job by ID
+* ✅ Update Job
+* ✅ Delete Job
+* ✅ Persistent storage using MySQL
+* ✅ Automatic schema generation using Hibernate
+* ✅ RESTful API design (GET, POST, PUT, DELETE)
+
+---
+
+## ▶️ How to Run
+
+1. Clone the repository.
+2. Create a MySQL database named:
+
+```
+job_db
+```
+
+3. Configure your credentials in `application.properties`.
+4. Run the application:
+
+```bash
 mvn spring-boot:run
 ```
 
-4. Server will start on:
+5. Access the API using Postman:
 
 ```
-http://localhost:8080
+http://localhost:8080/jobs
 ```
-
-5. Test endpoints using Postman
 
 ---
 
 ## 🚧 Future Improvements
 
-* Database integration using JPA / Hibernate
-* Exception handling
-* Input validation
-* DTO implementation
-* Frontend integration
+* 🔹 Global Exception Handling using `@ControllerAdvice`
+* 🔹 Input validation using Jakarta Validation
+* 🔹 Authentication & Authorization (JWT / Basic Auth)
+* 🔹 DTO mapping using MapStruct
 
 ---
 
 ## 👨‍💻 Author
 
-Kranthi J
-
-Building backend systems step by step and learning in public.
+**Kranthi J**
+Backend Developer | Learning in Public 🚀
 
 ---
 
-#SpringBoot #Java #RESTAPI #BackendDevelopment
+## 🔖 Tags
+
+`#SpringBoot` `#Java` `#MySQL` `#JPA` `#RESTAPI` `#BackendDevelopment`
