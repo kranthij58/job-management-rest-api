@@ -20,8 +20,9 @@ public class JobService {
         repo.save(job);
     }
 
-    public Job getjob(String postId){
+    public Job getJob(String postId){
         System.out.println("get");
+
        return (Job) repo.findById(postId).orElse(new Job());
     }
 

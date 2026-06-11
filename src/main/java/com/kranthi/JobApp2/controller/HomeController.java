@@ -21,23 +21,23 @@ public class HomeController {
     }
     @GetMapping("jobs/{postId}")
     public Job getJob(@PathVariable String postId){
-        return service.getjob(postId);
+        return service.getJob(postId);
     }
 
     @PostMapping("/jobs")
     public Job setJob( @RequestBody Job job){
         service.addJob(job);
-        return service.getjob(job.getPostId());
+        return service.getJob(job.getPostId());
     }
     @PutMapping("/jobs")
     public Job updateJob(@RequestBody Job job){
         service.updateJob(job);
-        return service.getjob(job.getPostId());
+        return service.getJob(job.getPostId());
     }
 
     @DeleteMapping("/jobs/{postId}")
     public Job deleteJob(@PathVariable String postId){
-        Job job = service.getjob(postId);
+        Job job = service.getJob(postId);
         service.deleteJob(postId);
         return job;
 
