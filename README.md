@@ -1,111 +1,365 @@
-# 🚀 Job Management REST API
+# 🚀 Job Management REST API with Spring Security
 
-A robust Job Management system built with **Spring Boot** and **Spring Data JPA**, featuring persistent data storage with **MySQL**.
+A robust Job Management System built using **Spring Boot**, **Spring Data JPA**, **Spring Security**, and **MySQL**.
 
----
-
-## 📌 Tech Stack
-
-* **Java 17+**
-* **Spring Boot 3.x** (Web, Data JPA)
-* **MySQL** (Relational Database)
-* **Maven** (Build Tool)
-* **Postman** (API Testing)
+The application provides complete CRUD operations for managing jobs along with secure authentication using Spring Security and BCrypt password encryption.
 
 ---
 
-## 🏗️ Architecture
+# 📌 Tech Stack
 
-This project follows a professional layered architecture ensuring separation of concerns:
-
-```
-Controller → Service → Repository (JPA) → MySQL Database
-```
-
-* **Controller** – Handles HTTP requests and exposes REST endpoints.
-* **Service** – Contains business logic and manages transactions.
-* **Repository** – Uses Spring Data JPA to interact with the database.
-* **Model (Entity)** – JPA entities mapped to MySQL tables.
+* Java 21
+* Spring Boot 4.x
+* Spring Web MVC
+* Spring Data JPA
+* Spring Security
+* Hibernate
+* MySQL
+* Lombok
+* Maven
+* Postman
 
 ---
 
-## 🗄️ Database Configuration
+# 🏗️ Architecture
 
-Configure your MySQL connection inside:
+This project follows a layered architecture:
 
+```text
+Controller
+    ↓
+Service
+    ↓
+Repository (JPA)
+    ↓
+MySQL Database
 ```
+
+### Layers
+
+#### Controller Layer
+
+Handles HTTP requests and responses.
+
+#### Service Layer
+
+Contains business logic and application rules.
+
+#### Repository Layer
+
+Interacts with the database using Spring Data JPA.
+
+#### Entity Layer
+
+Maps Java objects to database tables.
+
+---
+
+# 🔥 Features
+
+## Job Management
+
+✅ Create a Job
+
+✅ Retrieve all Jobs
+
+✅ Retrieve Job by ID
+
+✅ Update a Job
+
+✅ Delete a Job
+
+✅ Search Jobs by Keyword
+
+---
+
+## Security Features
+
+✅ Spring Security Integration
+
+✅ Basic Authentication
+
+✅ Custom UserDetailsService
+
+✅ Custom UserPrincipal Implementation
+
+✅ BCrypt Password Encryption
+
+✅ User Registration Endpoint
+
+✅ Stateless Session Management
+
+---
+
+## Database Features
+
+✅ MySQL Integration
+
+✅ Spring Data JPA Repositories
+
+✅ Hibernate ORM
+
+✅ Automatic Table Generation
+
+---
+
+# 🗄️ Database Configuration
+
+Configure MySQL credentials inside:
+
+```text
 src/main/resources/application.properties
 ```
 
-> ⚠️ Ensure `application.properties` is added to `.gitignore` to protect your database credentials.
+Example:
 
 ```properties
-# MySQL Connection Settings
 spring.datasource.url=jdbc:mysql://localhost:3306/job_db
 spring.datasource.username=YOUR_USERNAME
 spring.datasource.password=YOUR_PASSWORD
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
-# JPA / Hibernate Properties
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 ```
 
----
-
-## 🔥 Features
-
-* ✅ Create a Job
-* ✅ Retrieve all Jobs
-* ✅ Retrieve Job by ID
-* ✅ Update Job
-* ✅ Delete Job
-* ✅ Persistent storage using MySQL
-* ✅ Automatic schema generation using Hibernate
-* ✅ RESTful API design (GET, POST, PUT, DELETE)
+> ⚠️ Never commit database credentials to GitHub.
 
 ---
 
-## ▶️ How to Run
+# 📂 Project Structure
 
-1. Clone the repository.
-2. Create a MySQL database named:
-
+```text
+src
+ ├── controller
+ ├── service
+ ├── repository
+ ├── model
+ ├── config
+ └── JobApp2Application
 ```
-job_db
+
+---
+
+# 🔐 Authentication
+
+The application uses Spring Security Basic Authentication.
+
+---
+
+## Register a User
+
+### Endpoint
+
+```http
+POST /register-user
 ```
 
-3. Configure your credentials in `application.properties`.
-4. Run the application:
+### Request Body
+
+```json
+{
+  "username": "kranthi",
+  "password": "1234"
+}
+```
+
+### Response
+
+```json
+{
+  "id": 1,
+  "username": "kranthi"
+}
+```
+
+---
+
+## Access Protected Endpoints
+
+After registering a user, use Basic Authentication.
+
+### Example
+
+```http
+GET /jobs
+```
+
+Authorization:
+
+```text
+Username: kranthi
+Password: 1234
+```
+
+---
+
+# 📌 Job API Endpoints
+
+## Get All Jobs
+
+```http
+GET /jobs
+```
+
+---
+
+## Get Job By ID
+
+```http
+GET /jobs/{postId}
+```
+
+---
+
+## Create Job
+
+```http
+POST /jobs
+```
+
+Example Request:
+
+```json
+{
+  "postId": "8",
+  "postProfile": "Java Developer",
+  "postDesc": "Must have good experience in Core Java and Spring Boot",
+  "reqExperience": 2,
+  "postTechStack": [
+    "Core Java",
+    "Spring Boot",
+    "Hibernate"
+  ]
+}
+```
+
+---
+
+## Update Job
+
+```http
+PUT /jobs
+```
+
+---
+
+## Delete Job
+
+```http
+DELETE /jobs/{postId}
+```
+
+---
+
+## Search Jobs
+
+```http
+GET /jobs/keyword/{keyword}
+```
+
+Example:
+
+```http
+GET /jobs/keyword/java
+```
+
+---
+
+# ▶️ Running the Application
+
+## Clone Repository
+
+```bash
+git clone <repository-url>
+```
+
+## Navigate to Project
+
+```bash
+cd JobApp2
+```
+
+## Create Database
+
+```sql
+CREATE DATABASE job_db;
+```
+
+## Configure Database Credentials
+
+Update:
+
+```properties
+application.properties
+```
+
+## Run Application
 
 ```bash
 mvn spring-boot:run
 ```
 
-5. Access the API using Postman:
+Application starts on:
 
-```
-http://localhost:8080/jobs
+```text
+http://localhost:8080
 ```
 
 ---
 
-## 🚧 Future Improvements
+# 📚 Concepts Implemented
 
-* 🔹 Global Exception Handling using `@ControllerAdvice`
-* 🔹 Input validation using Jakarta Validation
-* 🔹 Authentication & Authorization (JWT / Basic Auth)
-* 🔹 DTO mapping using MapStruct
+* REST API Development
+* Spring Boot
+* Spring Data JPA
+* Hibernate ORM
+* Repository Pattern
+* Layered Architecture
+* Spring Security
+* User Authentication
+* BCrypt Password Hashing
+* Custom UserDetailsService
+* Basic Authentication
+* MySQL Integration
+* Lombok
 
 ---
 
-## 👨‍💻 Author
+# 🚧 Future Improvements
+
+* JWT Authentication
+* Role Based Authorization (ADMIN / USER)
+* Refresh Tokens
+* Global Exception Handling
+* DTO Layer
+* MapStruct Mapping
+* Validation using Jakarta Validation
+* Unit Testing
+* Integration Testing
+* Docker Support
+* Swagger/OpenAPI Documentation
+
+---
+
+# 👨‍💻 Author
 
 **Kranthi J**
-Backend Developer | Learning in Public 🚀
+
+Backend Developer | Java & Spring Boot Enthusiast
+
+Learning in Public 🚀
 
 ---
 
-## 🔖 Tags
+# 🔖 Tags
 
-`#SpringBoot` `#Java` `#MySQL` `#JPA` `#RESTAPI` `#BackendDevelopment`
+`SpringBoot`
+`SpringSecurity`
+`Java`
+`JPA`
+`Hibernate`
+`MySQL`
+`RESTAPI`
+`BackendDevelopment`
+`Maven`
+`Lombok`
