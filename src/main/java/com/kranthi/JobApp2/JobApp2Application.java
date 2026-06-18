@@ -9,7 +9,9 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 public class JobApp2Application {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(JobApp2Application.class, args);
 	}
+
 
 }

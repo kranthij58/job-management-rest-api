@@ -2,9 +2,7 @@
 
 A robust Job Management System built using **Spring Boot**, **Spring Data JPA**, **Spring Security**, and **MySQL**.
 
-The application provides complete CRUD operations for managing jobs along with secure authentication using Spring Security and BCrypt password encryption.
-
----
+The application provides complete CRUD operations for managing jobs along with secure authentication using Spring Security, JWT, and BCrypt password encryption.
 
 # 📌 Tech Stack
 
@@ -13,6 +11,7 @@ The application provides complete CRUD operations for managing jobs along with s
 * Spring Web MVC
 * Spring Data JPA
 * Spring Security
+* JWT (JSON Web Token)
 * Hibernate
 * MySQL
 * Lombok
@@ -85,6 +84,8 @@ Maps Java objects to database tables.
 
 ✅ BCrypt Password Encryption
 
+✅ JWT Authentication
+
 ✅ User Registration Endpoint
 
 ✅ Stateless Session Management
@@ -142,8 +143,8 @@ src
 
 # 🔐 Authentication
 
-The application uses Spring Security Basic Authentication.
-
+The application supports **both** Basic Authentication and JWT Authentication.
+ 
 ---
 
 ## Register a User
@@ -171,12 +172,12 @@ POST /register-user
   "username": "kranthi"
 }
 ```
-
+ 
 ---
 
-## Access Protected Endpoints
+## Option 1: Basic Authentication
 
-After registering a user, use Basic Authentication.
+After registering a user, use Basic Authentication directly.
 
 ### Example
 
@@ -190,7 +191,56 @@ Authorization:
 Username: kranthi
 Password: 1234
 ```
+ 
+---
 
+## Option 2: JWT Authentication
+
+### Login Endpoint
+
+```http
+POST /login
+```
+
+### Request Body
+
+```json
+{
+  "username": "kranthi",
+  "password": "1234"
+}
+```
+
+### Response
+
+```text
+eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiaGF2eWEiLCJleHAiOjE3ODE3NjA4MzIsImlhdCI6MTc4MTc2MDIzMn0.Xbrd1uRnG_xrsSDKTo0o_8AauSjJR6VJFJ7xawXbeQ0
+```
+
+### Using the Token
+
+Add the token to the `Authorization` header on subsequent requests:
+
+```text
+Authorization: Bearer <token>
+```
+
+### Example
+
+```http
+GET /jobs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiaGF2eWEiLCJleHAiOjE3ODE3NjA4MzIsImlhdCI6MTc4MTc2MDIzMn0.Xbrd1uRnG_xrsSDKTo0o_8AauSjJR6VJFJ7xawXbeQ0
+```
+ 
+---
+
+### How JWT Works in This Project
+
+* On login, the server generates a signed JWT containing the username (`sub`), issued-at (`iat`), and expiry (`exp`) claims.
+* The token is signed using **HMAC SHA-256 (HS256)**.
+* A custom JWT filter intercepts incoming requests, validates the token's signature and expiry, and authenticates the user before the request reaches the controller.
+* This makes the API **stateless** — no session is stored on the server, and every request is authenticated independently using the token.
+* Once the token expires, the client must log in again via `/login` to get a fresh one.
 ---
 
 # 📌 Job API Endpoints
@@ -317,6 +367,7 @@ http://localhost:8080
 * Layered Architecture
 * Spring Security
 * User Authentication
+* JWT Authentication
 * BCrypt Password Hashing
 * Custom UserDetailsService
 * Basic Authentication
@@ -327,7 +378,6 @@ http://localhost:8080
 
 # 🚧 Future Improvements
 
-* JWT Authentication
 * Role Based Authorization (ADMIN / USER)
 * Refresh Tokens
 * Global Exception Handling
@@ -363,3 +413,4 @@ Learning in Public 🚀
 `BackendDevelopment`
 `Maven`
 `Lombok`
+`JWT`
